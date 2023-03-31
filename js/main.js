@@ -22,7 +22,18 @@ function startGame() {
 
     // modify some default settings (i.e pointer events to prevent cursor to go 
     // out of the game window)
-    modifySettings();
+    //modifySettings();
+    engine.runRenderLoop(() => {
+        //let deltaTime = engine.getDeltaTime(); // remind you something ?
+
+        //tank.position.z += 1; // speed should be in unit/s, and depends on
+                                 // deltaTime !
+
+        // if we want to move while taking into account collision detections
+        // collision uses by default "ellipsoids"
+        //tank.moveWithCollisions(new BABYLON.Vector3(0, 0, 1));
+        scene.render();
+    });
 
 }
 
@@ -30,12 +41,16 @@ function createScene() {
     let scene = new BABYLON.Scene(engine);
     let ground = createGround(scene);
     let freeCamera = createFreeCamera(scene);
-    let ceilling = creatCeilling(scene);
-    let walls = createWalls(scene);
+    //let ceiling = creatCeiling(scene);
+    //let walls = createWalls(scene);
+
+    // create a target for the follow camera to track
+    //let target = BABYLON.MeshBuilder.CreateBox("target", {size: 1}, scene);
+    //target.position = new BABYLON.Vector3(0, 5, 0);
 
     // second parameter is the target to follow
-    let followCamera = createFollowCamera(scene, target);
-    scene.activeCamera = followCamera;
+    //let followCamera = createFollowCamera(scene, target);
+    scene.activeCamera = freeCamera;
 
     createLights(scene);
  
@@ -43,7 +58,7 @@ function createScene() {
 }
 
 function createGround(scene) {
-    const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 10, height: 10}, scene);
+    const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 100, height: 100}, scene);
     
     //scene is optional and defaults to the current scene
 
@@ -62,7 +77,7 @@ function createGround(scene) {
     return ground;
 }
 
-function creatCeilling(scene){
+function creatCeiling(scene){
   const ceiling = BABYLON.MeshBuilder.CreateBox("ceiling", {size: 10}, scene);
   ceiling.position.y = 5;
   ceiling.material = new BABYLON.StandardMaterial("ceilingMat", scene);
@@ -80,20 +95,21 @@ function createWalls(scene){
 
   walls[0].position.x = -5;
   walls[0].material = new BABYLON.StandardMaterial("wallMat1", scene);
-  walls[0].material.diffuseColor
+  walls[0].material.diffuseColor = new BABYLON.Color3.Green();
 
   return walls;
 }
 
 function createLights(scene) {
     // i.e sun light with all light rays parallels, the vector is the direction.
-    let light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(-1, -2, -1), scene);
+    let light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(-1, 10, -1), scene);
+    
 
 }
 
 function createFreeCamera(scene) {
 
-    let camera = new BABYLON.FreeCamera("freeCamera", new BABYLON.Vector3(0, 0, -10), scene);
+    let camera = new BABYLON.FreeCamera("freeCamera", new BABYLON.Vector3(0, 4, -30), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     // prevent camera to cross ground
