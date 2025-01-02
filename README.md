@@ -7,11 +7,9 @@
 Bienvenue dans notre jeu de course créé avec Babylon.js ! Dans ce jeu, vous aurez l'opportunité de conduire une voiture qui roule sur une route sans fin. Votre objectif principal est d'éviter les obstacles qui apparaissent sur la route tout en augmentant votre vitesse mais pas que... 
 
 ### Équipe de développement
-
-    - Yannis BAILI
-    - Julien BILETRY
     - Brahim LAMJARAD
-
+    - Yannis BAILI
+    
 ### Prérequis
 
 Avant de commencer à jouer, assurez-vous d'avoir les éléments suivants :
